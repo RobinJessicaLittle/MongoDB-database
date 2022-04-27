@@ -2,7 +2,7 @@ require("dotenv").config();
 const yargs = require("yargs");
 
 const {connections, client} = require ('./dataBase/connections')
-const {addMovie, listMovie, updateMovie, deleteMovie, deleteAll, findMovie, updateActor, updateGenre } = require('./utils/index.js')
+const {addMovie, listMovie, updateMovie, deleteMovie,/* deleteAll*/ findMovie, updateActor, updateGenre } = require('./utils/index.js')
 
 const app = async (yargsObj) => {
     const collection = await connections();
@@ -21,7 +21,7 @@ const app = async (yargsObj) => {
     //delete selected movie entry from database
     }else if (yargsObj.delete){
         await deleteMovie(collection, {title: yargsObj.title})
-    //Delete all database entries- doesn't work
+    //Delete all database entries- NOT WORKING
     /*}else if (yargsObj.deleteAll){
         await deleteAll(collection)*/
     //find Movie via title
