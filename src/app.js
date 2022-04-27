@@ -2,7 +2,7 @@ require("dotenv").config();
 const yargs = require("yargs");
 
 const {connections, client} = require ('./dataBase/connections')
-const {addMovie, listMovie, updateMovie, deleteMovie} = require('./utils/index.js')
+const {addMovie, listMovie, updateMovie, deleteMovie, findMovie} = require('./utils/index.js')
 
 const app = async (yargsObj) => {
     const collection = await connections();
@@ -12,9 +12,14 @@ const app = async (yargsObj) => {
     }else if (yargsObj.list){
         await listMovie(collection)
     }else if (yargsObj.update){
-        await updateMovie(collection)
+        await updateMovie(collection, 
+        {title: yargsObj.title},
+        { $set: {
+            actor:yargsObj.actor,
+        },
+    });
     }else if (yargsObj.delete){
-        await deleteMovie(collection)
+        await deleteMovie(collection, {title: yargsObj.title})
     }else {
         console.log ('incorrect command')
     }
@@ -23,6 +28,6 @@ const app = async (yargsObj) => {
 
 app(yargs.argv)
 
-//node src/app.js --add --title='But I'm a Cheerleader' --actor='Natasha Lyonne'
-//node src/app.js --list
-//Node src/db/connection.js
+//node src/app.js --add --title='Death Proof' --actor='Mary Elizabeth Winstead' WORKING
+//node src/app.js --list WORKING
+//node src/app.js --update

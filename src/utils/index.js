@@ -18,9 +18,15 @@ exports.listMovie = async (collection) => {
 };
 //////////////
 //ADDED BY ME FOR TASK
-exports.updateMovie = async (collection, movieObj) => {
+exports.findMovie=async(collection,movieObj)=>{
     try{
-        const updateEntry = await collection.updateOne(movieObj);
+        const movieList=await collection.find(movieObj).toArray();
+        console.log(movieList);
+    }catch (err) {console.log(err);}
+}
+exports.updateMovie = async (collection, movieObj, updateObj) => {
+    try{
+        const updateEntry = await collection.updateOne(movieObj, updateObj);
         console.log(updateEntry);
     } catch (error) {
         console.log(error)
